@@ -1,0 +1,15 @@
+
+# Python virtual environment
+.venv/
+
+# Python temporary files
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS files
+.DS_Store
+
+# Playwright artifacts
+test-results/
+playwright-report/
