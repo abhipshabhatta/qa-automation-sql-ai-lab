@@ -54,26 +54,90 @@ This test only checks whether the homepage loads.
 It does not verify order creation, payments, editing
 or database information.
 
-## Next steps
 
-- Test creating an order.
-- Use an isolated test database.
-- Check saved orders using SQL.
-```
 
-<text color="secondary" size="sm">I've used 27 November 2026 as the summary date. If your latest execution happened on a different date, change that line to the actual execution date.</text>
+## AUTO-002 - Create an order
 
-This sounds like a beginner describing real work. It also doesn't exaggerate your skills.
+### What I wanted to check
 
-## 4. Decide what to do with the HTML report
+I wanted to check whether a user could create
+an order and see the correct information on
+the homepage.
 
-For this first milestone, let's keep the generated HTML report locally and publish your human-written summary to GitHub.
+### Test data
 
-Why? Pytest's HTML report includes environment information, which can contain local paths and other details you might not want to publish without reviewing them.
+Customer: A unique QA test customer
+Item: Birthday cake
+Delivery date: 15 December 2026
+Status: New
+Total: €50.00
+Paid: €10.00
+Expected remaining amount: €40.00
 
-Later, GitHub Actions will generate downloadable reports automatically, and we'll add links to those runs.
+### How I tested it
 
-Open `.gitignore` and add this line at the bottom:
+I used Playwright to open the New Order form,
+enter the order details, and save the order.
 
-<CodeBlock language="gitignore"># Generated HTML reports
-reports/
+Then I checked that the correct order appeared
+on the homepage with the expected amounts.
+
+### Expected result
+
+The order should be saved successfully.
+The customer, item, total, paid amount and
+remaining balance should be displayed correctly.
+
+### Issue found during testing
+
+The test initially passed, but failed when I
+ran it again.
+
+Playwright found two orders with the same
+customer name, while my test expected only one.
+
+I realized that the test was using the same
+customer name on every execution.
+
+### What I changed
+
+I updated the test to generate a unique customer
+name every time it runs.
+
+This helps prevent the test from matching orders
+created during previous executions.
+
+
+### Actual result
+
+The test initially failed when I ran it again
+because it found two orders with the same customer name.
+
+I updated the test to generate a unique customer name
+for every execution.
+
+After making this change, I ran the full test suite
+three times. Both automated tests passed each time.
+
+### Result
+
+PASS - Verified on 27 November 2026.
+
+### Test execution summary
+
+Total automated tests: 2
+Passed: 2
+Failed: 0
+
+Repeated full suite runs: 3
+Successful runs: 3
+
+### What I learned
+
+I learned that an automated test can fail because
+of the way the test is written, even when the
+application is working correctly.
+
+I also learned how to read an assertion error,
+investigate the cause, and improve the test
+so it can run repeatedly.
