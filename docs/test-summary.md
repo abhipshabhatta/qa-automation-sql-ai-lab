@@ -141,3 +141,56 @@ application is working correctly.
 I also learned how to read an assertion error,
 investigate the cause, and improve the test
 so it can run repeatedly.
+
+
+## AUTO-003 - Verify saved order using SQL
+
+### What I wanted to check
+
+I wanted to make sure that information entered through the OrderSprout website was correctly saved in the database.
+
+### How I tested it
+
+I used Playwright to create a new order for a chocolate cake.
+
+Then I connected to the temporary SQLite test database using Python and ran an SQL query to find that order.
+
+I checked the saved customer name, item, total amount, paid amount and order status.
+
+### Test data
+
+- Customer: Unique SQL test customer
+- Item: Chocolate cake
+- Total: €80.00
+- Paid: €20.00
+- Status: New
+
+### Expected result
+
+The database should contain the new order with the correct information.
+
+### Actual result
+
+The order was found in the test database, and all the checked values matched the expected results.
+
+### Result
+
+**PASS — 28 November 2026**
+
+The SQL test passed individually, and the complete three-test suite also passed.
+
+### Issue encountered
+
+During the first complete test run, the homepage test failed because it tried to access port 5001 instead of the test server on port 5002.
+
+I corrected the port number and ran the complete suite again. All three tests passed.
+
+### What I learned
+
+I learned how to use SQL to read information from a database and how to use Python assertions to check saved data.
+
+I also learned how to investigate a connection error and correct the test configuration.
+
+### Limitation
+
+The tests currently require a locally running OrderSprout server and a matching test database path. Automatic setup and cleanup are planned.
